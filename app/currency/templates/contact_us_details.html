@@ -9,6 +9,7 @@
 {% endblock caption %}
 
 {% block content %}
+  <a href="{% url 'currency:contact-us-create' %}">Create</a><br>
 
 <thead>
   <tr bgcolor="yellow">
@@ -16,20 +17,16 @@
     <th>Email from</th>
     <th>Subject</th>
     <th>Message</th>
-    <th>Update</th>
   </tr>
 </thead>
 
 <tbody>
-{% for contact in contact_us %}
   <tr>
-    <td>{{ contact.id }}</td>
-    <td>{{ contact.email_from }}</td>
-    <td>{{ contact.subject }}</td>
-    <td>{{ contact.message }}</td>
-    <td><a href="/contact-us/update/{{ contact.id }}/">Update</a></td>
+    <td>{{ contactus.id }}</td>
+    <td>{{ contactus.email_from }}</td>
+    <td>{{ contactus.subject }}</td>
+    <td>{{ contactus.message }}</td>
   </tr>
-{% endfor %}
 </tbody>
 
 {% endblock content %}
