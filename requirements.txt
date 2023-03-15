@@ -1,7 +1,11 @@
 Django==4.1.6
 django-extensions==3.2.1
-ipython
 django-debug-toolbar==3.8.1
+django-admin-rangefilter
+django-import-export
+ipython
+
+
 
 # flake8
 flake8
