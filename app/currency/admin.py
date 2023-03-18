@@ -34,9 +34,11 @@ class RateAdmin(ImportExportModelAdmin):
 class ContactUsAdmin(ImportExportModelAdmin):
     list_display = (
         'id',
+        'name',
         'email_from',
         'subject',
         'message',
+        'created',
     )
     search_fields = (
         'subject',

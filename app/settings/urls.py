@@ -8,7 +8,7 @@ urlpatterns = [
 
     path('__debug__/', include('debug_toolbar.urls')),
 
-    path('', IndexView.as_view()),
+    path('', IndexView.as_view(), name='index'),
 
     path('currency/', include('currency.urls'))
 ]
