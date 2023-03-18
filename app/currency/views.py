@@ -52,9 +52,9 @@ class ContactUsCreateView(CreateView):
         subject = 'User ContactUs'
         recipient = 'support@example.com'
         message = f'''
-            Request from: {self.object.name}. 
-            Reply to email: {self.object.email_from}. 
-            Subject: {self.object.subject}. 
+            Request from: {self.object.name}.
+            Reply to email: {self.object.email_from}.
+            Subject: {self.object.subject}.
             Body: {self.object.message}.
         '''
 
