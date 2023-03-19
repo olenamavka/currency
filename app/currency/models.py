@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 from currency.choices import RateCurrencyChoices
 
@@ -18,8 +19,10 @@ class Rate(models.Model):
 
 
 class ContactUs(models.Model):
+    created = models.DateTimeField(default=timezone.now)
+    name = models.CharField(max_length=128, default='')
     email_from = models.EmailField(max_length=40)
-    subject = models.CharField(max_length=100)
+    subject = models.CharField(max_length=256)
     message = models.TextField()
 
     def __str__(self):
@@ -33,3 +36,9 @@ class Source(models.Model):
 
     def __str__(self):
         return f'Source URL: {self.source_url}, Name: {self.name}'
+
+
+class RequestResponseLog(models.Model):
+    path = models.CharField(max_length=128)
+    request_method = models.CharField(max_length=32)
+    time = models.FloatField()

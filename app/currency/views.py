@@ -48,6 +48,30 @@ class ContactUsCreateView(CreateView):
     template_name = 'contact_us_create.html'
     success_url = reverse_lazy('currency:contact-us-list')
 
+    def _send_mail(self):
+        subject = 'User ContactUs'
+        recipient = 'support@example.com'
+        message = f'''
+            Request from: {self.object.name}.
+            Reply to email: {self.object.email_from}.
+            Subject: {self.object.subject}.
+            Body: {self.object.message}.
+        '''
+
+        from django.core.mail import send_mail
+        send_mail(
+            subject,
+            message,
+            recipient,
+            [recipient],
+            fail_silently=False,
+        )
+
+    def form_valid(self, form):
+        redirect = super().form_valid(form)
+        self._send_mail()
+        return redirect
+
 
 class ContactUsUpdateView(UpdateView):
     form_class = ContactUsForm
