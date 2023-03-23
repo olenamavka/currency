@@ -14,8 +14,9 @@ class RequestResponseTimeMiddleware:
 
         end = time()
         execution_time = end - start
-        RequestResponseLog.objects.create(request_method=request.method,
-                                          path=request.path,
-                                          time=execution_time
-                                          )
+        RequestResponseLog.objects.create(
+            request_method=request.method,
+            path=request.path,
+            time=execution_time
+        )
         return response
