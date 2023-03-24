@@ -25,4 +25,3 @@ class UserActivateView(RedirectView):
 
         url = super().get_redirect_url(*args, **kwargs)
         return url
-
