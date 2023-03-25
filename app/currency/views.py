@@ -1,5 +1,6 @@
 from currency.models import Rate, ContactUs, Source
 from currency.forms import RateForm, SourceForm, ContactUsForm
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
@@ -58,7 +59,7 @@ class ContactUsCreateView(CreateView):
 
     def _send_mail(self):
         subject = 'User ContactUs'
-        recipient = 'support@example.com'
+        recipient = settings.DEFAULT_FROM_EMAIL
         message = f'''
             Request from: {self.object.name}.
             Reply to email: {self.object.email_from}.
@@ -139,9 +140,3 @@ class ProfileView(LoginRequiredMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
-
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     queryset = queryset.filter(id=self.request.user.id)
-    #     # breakpoint()
-    #     return queryset
