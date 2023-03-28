@@ -9,7 +9,7 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 
 class RateListView(ListView):
     template_name = 'rates_list.html'
-    queryset = Rate.objects.all()
+    queryset = Rate.objects.all().select_related('source')
 
 
 class RateDetailView(LoginRequiredMixin, DetailView):
