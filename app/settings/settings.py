@@ -38,19 +38,21 @@ DJANGO_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
 ]
 
 EXTERNAL_APPS = [
     'django_extensions',
-    "debug_toolbar",
-    "rangefilter",
-    "import_export",
+    'debug_toolbar',
+    'rangefilter',
+    'import_export',
+    'crispy_forms',
+    'crispy_bootstrap4',
 ]
 
 INTERNAL_APPS = [
     'currency',
-    'account'
+    'account',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + EXTERNAL_APPS + INTERNAL_APPS
@@ -86,6 +88,10 @@ TEMPLATES = [
         },
     },
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap4'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'settings.wsgi.application'
 
@@ -136,6 +142,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR.parent / 'static_content' / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

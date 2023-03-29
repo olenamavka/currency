@@ -11,27 +11,31 @@
 {% block content %}
   <a href="{% url 'currency:contact-us-create' %}">Create</a><br>
 
-<thead>
-  <tr bgcolor="yellow">
-    <th>Id</th>
-    <th>Name</th>
-    <th>Email from</th>
-    <th>Subject</th>
-    <th>Message</th>
-    <th>Created</th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>{{ contactus.id }}</td>
-    <td>{{ contactus.name }}</td>
-    <td>{{ contactus.email_from }}</td>
-    <td>{{ contactus.subject }}</td>
-    <td>{{ contactus.message }}</td>
-    <td>{{ contactus.created }}</td>
-
-  </tr>
-</tbody>
+  <div class="row col-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email from</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Message</th>
+                <th scope="col">Created</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">#</th>
+                    <td>{{ contactus.id }}</td>
+                    <td>{{ contactus.name }}</td>
+                    <td>{{ contactus.email_from }}</td>
+                    <td>{{ contactus.subject }}</td>
+                    <td>{{ contactus.message }}</td>
+                    <td>{{ contactus.created }}</td>
+                </tr>
+            </tbody>
+        </table>
+  </div>
 
 {% endblock content %}
