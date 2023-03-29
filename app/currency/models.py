@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-
+from django.templatetags.static import static
 from currency.choices import RateCurrencyChoices
 
 
@@ -30,13 +30,30 @@ class ContactUs(models.Model):
         return f'Email from: {self.email_from}, Subject: {self.subject}'
 
 
+def logo_path(instance, filename):
+    return f"logos/{instance.name}/{filename}"
+
+
 class Source(models.Model):
+    logo = models.FileField(
+        default=None,
+        null=True,
+        blank=True,
+        upload_to=logo_path
+    )
     source_url = models.URLField(max_length=255)
     name = models.CharField(max_length=64)
     number = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def logo_url(self):
+        if self.logo:
+            return self.logo.url
+
+        return static('logo-unknown.jpg')
 
 
 class RequestResponseLog(models.Model):

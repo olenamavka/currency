@@ -11,22 +11,29 @@
 {% block content %}
   <a href="{% url 'currency:source-create' %}">Create</a><br>
 
-<thead>
-  <tr bgcolor="yellow">
-    <th>Id</th>
-    <th>Source URL</th>
-    <th>Name</th>
-    <th>Number</th>
-  </tr>
-</thead>
-
-<tbody>
-  <tr>
-    <td>{{ source.id }}</td>
-    <td>{{ source.source_url }}</td>
-    <td>{{ source.name }}</td>
-    <td>{{ source.number }}</td>
-  </tr>
-</tbody>
+  <div class="row col-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">ID</th>
+                <th scope="col">Logo</th>
+                <th scope="col">Source URL</th>
+                <th scope="col">Name</th>
+                <th scope="col">Number</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">#</th>
+                    <td>{{ source.id }}</td>
+                    <td><img src="{{ source.logo_url }}" class="img-fluid img-thumbnail" alt="BankLogo" width="50"></td>
+                    <td>{{ source.source_url }}</td>
+                    <td>{{ source.name }}</td>
+                    <td>{{ source.number }}</td>
+                </tr>
+            </tbody>
+        </table>
+  </div>
 
 {% endblock content %}
