@@ -1,14 +1,25 @@
 from currency.models import Rate, ContactUs, Source
 from currency.forms import RateForm, SourceForm, ContactUsForm
+from currency.filters import RateFilter, SourceFilter, ContactUsFilter
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView, TemplateView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView, TemplateView
+from django_filters.views import FilterView
 
 
-class RateListView(ListView):
+class RateListView(FilterView):
     template_name = 'rates_list.html'
     queryset = Rate.objects.all().select_related('source')
+    paginate_by = 10
+    filterset_class = RateFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_pagination'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )
+        return context
 
 
 class RateDetailView(LoginRequiredMixin, DetailView):
@@ -41,9 +52,11 @@ class RateDeleteView(UserPassesTestMixin, DeleteView):
         return self.request.user.is_superuser
 
 
-class ContactUsListView(ListView):
+class ContactUsListView(FilterView):
     template_name = 'contact_us_list.html'
     queryset = ContactUs.objects.all()
+    paginate_by = 10
+    filterset_class = ContactUsFilter
 
 
 class ContactUsDetailView(DetailView):
@@ -90,9 +103,11 @@ class ContactUsDeleteView(DeleteView):
     success_url = reverse_lazy('currency:contact-us-list')
 
 
-class SourceListView(ListView):
+class SourceListView(FilterView):
     template_name = 'source_list.html'
     queryset = Source.objects.all()
+    paginate_by = 10
+    filterset_class = SourceFilter
 
 
 class SourceDetailView(DetailView):
