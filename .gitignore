@@ -2,4 +2,3 @@
 venv
 *.sqlite3
 __pycache__
-**/celerybeat-schedule.*
