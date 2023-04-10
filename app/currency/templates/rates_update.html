@@ -8,12 +8,12 @@
 {% endblock title %}
 
 {% block content %}
-    Update Rate Form
+    <h6>Update Rate Form</h6>
 
     <form method="post">
         {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-outline-info">Submit</button>
     </form>
 
 {% endblock content %}

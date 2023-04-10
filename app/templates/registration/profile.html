@@ -8,13 +8,13 @@
 {% endblock title %}
 
 {% block content %}
-  <p>Update Profile<p>
+  <h6>Update Profile</h6>
   <img src="{{ user.avatar_url }}" class="img-fluid img-thumbnail" width="150">
 
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form|crispy }}
-    <button type="submit">Submit</button>
+    <button type="submit" class="btn btn-outline-info">Submit</button>
   </form>
 
 {% endblock content %}
