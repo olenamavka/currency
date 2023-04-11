@@ -7,12 +7,12 @@
 {% endblock title %}
 
 {% block content %}
-    Update Source Form
+    <h6>Update Source Form</h6>
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-outline-info">Submit</button>
     </form>
 
 {% endblock content %}

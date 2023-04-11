@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block title %}
     Source
 {% endblock title %}
@@ -9,8 +11,16 @@
 {% endblock caption %}
 
 {% block content %}
-  <a href="{% url 'currency:source-create' %}">Create</a><br>
-
+  <a class="btn btn-outline-info" href="{% url 'currency:source-create' %}">Create</a><br>
+  <form method="get">
+    <div class="form-row">
+      <div class="form-group col-md-6 mb-0">
+        {{ filter.form.name|as_crispy_field }}
+      </div>
+    </div>
+    <input type="submit" class="btn btn-outline-info" value="Submit" />
+  </form>
+  <br>
   <div class="row col-12">
         <table class="table table-striped">
             <thead>
@@ -49,5 +59,7 @@
             </tbody>
         </table>
   </div>
+
+{% include 'includes/pagination.html' %}
 
 {% endblock content %}
