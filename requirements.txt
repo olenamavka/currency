@@ -1,6 +1,7 @@
 Celery
 gevent
 Django==4.1.7
+djangorestframework
 django-extensions==3.2.1
 django-debug-toolbar==3.8.1
 django-admin-rangefilter
@@ -12,6 +13,8 @@ ipython==8.12.0
 requests
 beautifulsoup4
 django-filter
+djangorestframework-simplejwt
+drf-yasg
 
 # flake8
 flake8
