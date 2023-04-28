@@ -1,0 +1,46 @@
+[
+  {
+    "model": "currency.source",
+    "pk": 1,
+    "fields": {
+      "logo": "",
+      "source_url": "https://api.monobank.ua/bank/currency",
+      "name": "Monobank",
+      "code_name": "monobank",
+      "number": null
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 2,
+    "fields": {
+      "logo": "",
+      "source_url": "https://api.privatbank.ua/p24api/pubinfo?exchange&json&coursid=11",
+      "name": "PrivatBank",
+      "code_name": "privatbank",
+      "number": null
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 3,
+    "fields": {
+      "logo": "",
+      "source_url": "https://rate.in.ua/",
+      "name": "Rate.in.ua",
+      "code_name": "rate.in.ua",
+      "number": null
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 4,
+    "fields": {
+      "logo": "",
+      "source_url": "",
+      "name": "1",
+      "code_name": "1",
+      "number": null
+    }
+  }
+]
