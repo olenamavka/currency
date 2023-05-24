@@ -29,6 +29,9 @@ class ContactUs(models.Model):
     subject = models.CharField(max_length=256)
     message = models.TextField()
 
+    class Meta:
+        ordering = ('-created', )
+
     def __str__(self):
         return f'Email from: {self.email_from}, Subject: {self.subject}'
 
@@ -48,6 +51,9 @@ class Source(models.Model):
     name = models.CharField(max_length=64)
     code_name = models.CharField(max_length=64, unique=True)
     number = models.CharField(max_length=20, null=True, blank=True)
+
+    class Meta:
+        ordering = ('name', )
 
     def __str__(self):
         return self.name

@@ -14,22 +14,30 @@ from pathlib import Path
 
 from celery.schedules import crontab
 from django.urls import reverse_lazy
+from environ import environ
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tj=y=&=na5u@=^pw9cr_a_8&i5d$uw+wdx!5lkl(@8m1hjfs$2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
+environ.Env.read_env(os.path.join(BASE_DIR.parent, '.env'))
 
-ALLOWED_HOSTS = ['*']
+SECRET_KEY = env('SECRET_KEY')
 
+DEBUG = env('DEBUG')
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', [])
 
 # Application definition
 
@@ -106,11 +114,14 @@ WSGI_APPLICATION = 'settings.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env.str('POSTGRES_DB', 'currency-db'),
+        'USER': env.str('POSTGRES_USER', ''),
+        'PASSWORD': env.str('POSTGRES_PASSWORD', ''),
+        'HOST': env.str('POSTGRES_HOST', 'localhost'),
+        'PORT': env.str('POSTGRES_PORT', '5432'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -148,6 +159,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+# STATIC_ROOT = BASE_DIR.parent / 'static_content' / 'static'
+STATIC_ROOT = '/tmp/static'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR.parent / 'static_content' / 'media'
@@ -175,12 +188,17 @@ if DEBUG:
 HOST = 'localhost:8000'
 HTTP_SCHEMA = 'http'
 
-# CELERY
-CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_BROKER_URL = 'amqp://{0}:{1}@{2}:{3}//'.format(
+    env.str('RABBITMQ_DEFAULT_USER', 'guest'),
+    env.str('RABBITMQ_DEFAULT_PASS', 'guest'),
+    env.str('RABBITMQ_DEFAULT_HOST', '127.0.0.1'),
+    env.str('RABBITMQ_DEFAULT_PORT', '5672')
+)
+
 CELERY_BEAT_SCHEDULE = {
     'parse_privatbank': {
         'task': 'currency.tasks.parse_privatbank',
-        'schedule': crontab(minute='*/15')
+        'schedule': crontab(minute='*/1')
     },
     'parse_monobank': {
         'task': 'currency.tasks.parse_monobank',
@@ -188,7 +206,7 @@ CELERY_BEAT_SCHEDULE = {
     },
     'parse_rate': {
         'task': 'currency.tasks.parse_rate',
-        'schedule': crontab(minute='*/15')
+        'schedule': crontab(minute='*/1')
     },
 }
 
@@ -230,4 +248,11 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+        "LOCATION": f"{env.str('CACHE_DEFAULT_HOST', '127.0.0.1')}:{env.str('CACHE_DEFAULT_PORT', '11211')}",
+    }
 }

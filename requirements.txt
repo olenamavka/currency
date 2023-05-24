@@ -16,6 +16,13 @@ django-filter
 djangorestframework-simplejwt
 drf-yasg
 model-bakery
+djangorestframework-xml
+djangorestframework-yaml
+pymemcache
+gunicorn
+django-environ
+psycopg2-binary
+flower
 
 # flake8
 flake8
